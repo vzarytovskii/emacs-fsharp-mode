@@ -79,7 +79,7 @@ for all *nix.")
            (exec-path (append searchdirs exec-path)))
       (executable-find exe))))
 
-(defun fsharp-mode--is-dotnet-present
+(defun fsharp-mode--is-dotnet-present ()
     (executable-find "dotnet"))
 
 (provide 'fsharp-mode-util)
