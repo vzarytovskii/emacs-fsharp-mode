@@ -45,11 +45,13 @@
 ;;; Compilation
 
 (defvar fsharp-compile-command
-  (-any #'fsharp-mode--executable-find '("fsharpc" "fsc"))
+  (-any #'fsharp-mode--executable-find '("fsc" "fsharpc"))
   "The program used to compile F# source files.")
 
 (defvar fsharp-build-command
-  (-any #'fsharp-mode--msbuild-find '("msbuild" "xbuild"))
+  (if (fsharp-mode--is-dotnet-present)
+      "dotnet msbuild"
+    (-any #'fsharp-mode--msbuild-find '("msbuild" "xbuild")))
   "The command used to build F# projects and solutions.")
 
 ;;; ----------------------------------------------------------------------------
@@ -113,6 +115,7 @@
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.fs[iylx]?\\'" . fsharp-mode))
+(add-to-list 'auto-mode-alist '("\\.fsproj\\'" . fsharp-mode))
 
 (defvar fsharp-mode-syntax-table nil
   "Syntax table in use in fsharp mode buffers.")
